@@ -15,7 +15,7 @@ jobs:
     container:
       image: returntocorp/semgrep
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
         # Perform scanning using Semgrep
         # Pass even when it identifies issues or encounters errors.

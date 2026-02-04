@@ -11,6 +11,8 @@ export const NO_ASSIGNED_ENTITIES_TEXT = `The user doesn't have any entity acces
 
 export const NO_ASSIGNED_DEFAULT_ENTITIES_TEXT = `There are no default entity access roles assigned yet. Once you assign the default role on specific entities, these entities will show up here.`;
 
+export const NO_ACCOUNT_DELEGATIONS_TEXT = `The user is not added to any account delegations. Once the user is added to an account delegation for specific child accounts, their list will show up here.`;
+
 export const INTERNAL_ERROR_NO_CHANGES_SAVED = `Internal Error. No changes were saved.`;
 
 export const LAST_ACCOUNT_ADMIN_ERROR =
@@ -22,8 +24,6 @@ export const ERROR_STATE_TEXT =
 // Delegation error messages
 export const NO_ITEMS_TO_DISPLAY_TEXT = 'No items to display.';
 export const NO_DELEGATED_USERS_TEXT = 'No users added.';
-export const DELEGATION_VALIDATION_ERROR =
-  'At least one user must be selected as a delegate.';
 
 // Links
 export const IAM_DOCS_LINK =

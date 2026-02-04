@@ -382,8 +382,57 @@ const databases = [
 
   http.get('*/databases/postgresql/instances/:id/connection-pools', () => {
     const connectionPools = databaseConnectionPoolFactory.buildList(5);
+    // For mocking error response
+    // return HttpResponse.json({ errors: [{ reason: 'Unable to retrieve connection pools' }] }, { status: 400 });
     return HttpResponse.json(makeResourcePage(connectionPools));
   }),
+
+  http.post(
+    '*/databases/postgresql/instances/:id/connection-pools',
+    async ({ request }) => {
+      const body = await request.json();
+      const payload: any = body;
+
+      const connectionPool = databaseConnectionPoolFactory.build({
+        database: payload.database,
+        label: payload.label,
+        mode: payload.mode,
+        size: payload.size,
+        username: payload.username,
+      });
+      // For mocking error response
+      // return HttpResponse.json(
+      //   {
+      //     errors: [
+      //       { field: 'label', reason: 'sample error text' },
+      //       { field: 'database', reason: 'sample error text' },
+      //       { field: 'mode', reason: 'sample error text' },
+      //       { field: 'size', reason: 'sample error text' },
+      //       { field: 'username', reason: 'sample error text' },
+      //     ],
+      //   },
+      //   { status: 400 }
+      // );
+      return HttpResponse.json(connectionPool);
+    }
+  ),
+
+  http.put(
+    '*/databases/postgresql/instances/:id/connection-pools/:label',
+    async ({ request }) => {
+      const body = await request.json();
+      const payload: any = body;
+
+      const connectionPool = databaseConnectionPoolFactory.build({
+        database: payload.database,
+        label: payload.label,
+        mode: payload.mode,
+        size: payload.size,
+        username: payload.username,
+      });
+      return HttpResponse.json(connectionPool);
+    }
+  ),
 
   http.get('*/databases/:engine/instances/:id', ({ params }) => {
     const database = makeMockDatabase(params);
@@ -897,6 +946,13 @@ export const handlers = [
     const linodesWithFirewalls = linodeFactory.buildList(10, {
       region: 'ap-west',
     });
+    const linodesWithAclpAlerts = linodeFactory.buildList(10, {
+      region: 'ap-west',
+      alerts: {
+        system_alerts: [1, 2, 3, 4, 5],
+        user_alerts: [6, 7, 8, 9, 10],
+      },
+    });
     const metadataLinodeWithCompatibleImage = linodeFactory.build({
       image: 'metadata-test-image',
       label: 'metadata-test-image',
@@ -984,6 +1040,7 @@ export const handlers = [
     });
     const linodes = [
       ...linodesWithFirewalls,
+      ...linodesWithAclpAlerts,
       ...mtcLinodes,
       ...aclpSupportedRegionLinodes,
       nonMTCPlanInMTCSupportedRegionsLinode,

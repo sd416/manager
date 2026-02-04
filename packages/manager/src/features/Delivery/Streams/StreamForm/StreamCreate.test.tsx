@@ -43,7 +43,7 @@ describe('StreamCreate', () => {
       const createStreamButtonText = 'Create Stream';
 
       const fillOutFormWithNewDestination = async () => {
-        const streamNameInput = screen.getByLabelText('Name');
+        const streamNameInput = screen.getByLabelText('Stream Name');
         await userEvent.type(streamNameInput, 'Test');
         const destinationNameInput = screen.getByLabelText('Destination Name');
         await userEvent.type(destinationNameInput, 'Test destination name');
@@ -63,7 +63,9 @@ describe('StreamCreate', () => {
         await userEvent.type(accessKeyIDInput, 'Test');
         const secretAccessKeyInput = screen.getByLabelText('Secret Access Key');
         await userEvent.type(secretAccessKeyInput, 'Test');
-        const logPathPrefixInput = screen.getByLabelText('Log Path Prefix');
+        const logPathPrefixInput = screen.getByLabelText(
+          'Log Path Prefix (optional)'
+        );
         await userEvent.type(logPathPrefixInput, 'Test');
       };
 
@@ -143,7 +145,7 @@ describe('StreamCreate', () => {
             renderStreamCreate();
 
             // Fill out form and select existing destination
-            const streamNameInput = screen.getByLabelText('Name');
+            const streamNameInput = screen.getByLabelText('Stream Name');
             await userEvent.type(streamNameInput, 'Test');
             const destinationNameInput =
               screen.getByLabelText('Destination Name');

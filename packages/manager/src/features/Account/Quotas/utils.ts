@@ -25,6 +25,9 @@ const INCLUDED_OBJ_QUOTA_TYPES = [
   'obj-total-egress-throughput',
   'obj-total-concurrent-requests',
 ];
+const INCLUDED_OBJ_GLOBAL_QUOTA_TYPES = ['keys'];
+
+export const QUOTA_ROW_MIN_HEIGHT = 58;
 
 type UseGetLocationsForQuotaService =
   | {
@@ -89,14 +92,40 @@ interface GetQuotasFiltersProps {
   service: SelectOption<QuotaType>;
 }
 
-export const getQuotaVisibilityFilter = (service: SelectOption<QuotaType>) => {
+export interface QuotaWithUsage extends Quota {
+  usage: null | QuotaUsage;
+}
+
+export const getQuotaVisibilityFilter = (service: QuotaType) => {
   return {
     isVisible(quota: Quota) {
-      if (service.value === 'object-storage') {
-        return INCLUDED_OBJ_QUOTA_TYPES.includes(quota.quota_type);
+      if (service === 'object-storage') {
+        return (
+          INCLUDED_OBJ_QUOTA_TYPES.includes(quota.quota_type) ||
+          INCLUDED_OBJ_GLOBAL_QUOTA_TYPES.includes(quota.quota_type)
+        );
       }
 
       return true;
+    },
+  };
+};
+
+export const getQuotaMapper = (service: QuotaType) => {
+  return {
+    mapQuota(quota: Quota, usage: null | QuotaUsage): QuotaWithUsage {
+      if (service === 'object-storage') {
+        return {
+          ...quota,
+          quota_name: quota.quota_name.replace(' (per endpoint)', ''),
+          usage,
+        };
+      }
+
+      return {
+        ...quota,
+        usage,
+      };
     },
   };
 };
@@ -166,17 +195,19 @@ export const getQuotaIncreaseMessage = ({
   }
 
   return {
-    description: `**User**: ${profile.username}<br>\n**Email**: ${
-      profile.email
-    }<br>\n**Quota Name**: ${
-      quota.quota_name
-    }<br>\n**Current Quota**: ${convertedMetrics.limit?.toLocaleString()} ${
-      convertedMetrics.metric
-    }<br>\n**New Quota Requested**: ${quantity?.toLocaleString()} ${
-      convertedMetrics.metric
-    }<br>\n**Needed in**: ${
-      neededIn
-    }<br>\n**${regionAppliedLabel}**: ${regionAppliedValue}`,
+    description:
+      `**User**: ${profile.username}<br>\n**Email**: ${
+        profile.email
+      }<br>\n**Quota Name**: ${
+        quota.quota_name
+      }<br>\n**Current Quota**: ${convertedMetrics.limit?.toLocaleString()} ${
+        convertedMetrics.metric
+      }<br>\n**New Quota Requested**: ${quantity?.toLocaleString()} ${
+        convertedMetrics.metric
+      }<br>\n**Needed in**: ${neededIn}<br>\n` +
+      (regionAppliedValue
+        ? `**${regionAppliedLabel}**: ${regionAppliedValue}`
+        : ''),
     neededIn: 'Fewer than 7 days',
     notes: '',
     quantity: String(quantity),

@@ -4,6 +4,7 @@ import {
   Box,
   ErrorState,
   LinkButton,
+  SelectedIcon,
   Stack,
   Typography,
 } from '@linode/ui';
@@ -13,13 +14,16 @@ import * as React from 'react';
 
 import EmptyStateCloud from 'src/assets/icons/empty-state-cloud.svg';
 import { DebouncedSearchTextField } from 'src/components/DebouncedSearchTextField';
+import { DocumentTitleSegment } from 'src/components/DocumentTitle';
 import { LandingHeader } from 'src/components/LandingHeader';
 
 import { PRODUCTS } from '../products';
+import { marketplaceContainerStyles } from '../shared';
 import { CategorySection } from './CategorySection';
 import { filterProducts } from './utils';
 
 import type { Category, Product, Type } from '../shared';
+import type { AutocompleteRenderOptionState } from '@mui/material';
 
 export const MarketplaceLanding = () => {
   const navigate = useNavigate();
@@ -87,10 +91,39 @@ export const MarketplaceLanding = () => {
     updateSearchParam('query', searchString || undefined);
   };
 
-  // Filter products here based on search and type filters. If no filters are set, shows all available products.
+  const renderAutocompleteOption = React.useCallback(
+    (prefix: string) =>
+      (
+        props: React.HTMLAttributes<HTMLLIElement> & { key: string },
+        option: { label: string },
+        state: AutocompleteRenderOptionState
+      ) => {
+        const { key, ...rest } = props;
+        return (
+          <li
+            {...rest}
+            data-pendo-id={`Cloud Marketplace Catalog-${option.label}`}
+            key={`${prefix}-${key}`}
+          >
+            <Box
+              sx={{
+                flexGrow: 1,
+              }}
+            >
+              {option.label}
+            </Box>
+            <SelectedIcon visible={state.selected} />
+          </li>
+        );
+      },
+    []
+  );
+
+  // Filter products here based on category, search and type filters. If no filters are set, shows all available products.
   const filteredProducts = React.useMemo(
-    () => filterProducts(PRODUCTS, { searchQuery, selectedType }),
-    [searchQuery, selectedType]
+    () =>
+      filterProducts(PRODUCTS, { searchQuery, selectedCategory, selectedType }),
+    [searchQuery, selectedCategory, selectedType]
   );
 
   // Group filtered products by category
@@ -107,41 +140,44 @@ export const MarketplaceLanding = () => {
     return map;
   }, [filteredProducts]);
 
+  // Get categories that have at least one filtered product
+  const categoriesWithFilteredProducts = React.useMemo(
+    () => Object.keys(filteredProductsByCategory) as Category[],
+    [filteredProductsByCategory]
+  );
+
   // Filter categories based on:
   // 1. Selected category from dropdown (if set)
-  // 2. All categories, sorted by product count (if no filters)
+  // 2. All categories that have filtered products, sorted by product count (if no category selected)
   const filteredCategories = React.useMemo(() => {
     if (selectedCategory) {
-      return categoriesWithProducts.filter((cat) => cat === selectedCategory);
+      return categoriesWithFilteredProducts.filter(
+        (cat) => cat === selectedCategory
+      );
     }
-    // No filters - show all categories, sorted by product count (highest to lowest)
-    return [...categoriesWithProducts].sort((a, b) => {
+
+    // Show all categories sorted by product count (highest to lowest)
+    return [...categoriesWithFilteredProducts].sort((a, b) => {
       const countA = filteredProductsByCategory[a]?.length || 0;
       const countB = filteredProductsByCategory[b]?.length || 0;
       return countB - countA;
     });
-  }, [selectedCategory, categoriesWithProducts, filteredProductsByCategory]);
+  }, [
+    selectedCategory,
+    categoriesWithFilteredProducts,
+    filteredProductsByCategory,
+  ]);
 
-  const hasFiltersApplied = Boolean(searchQuery || selectedType);
+  const hasFiltersApplied = Boolean(
+    searchQuery || selectedCategory || selectedType
+  );
 
   // Show empty state if there are no products to display (either no products exist, or filters return no results)
   const showEmptyState = filteredProducts.length === 0;
 
   return (
-    <Box
-      sx={(theme) => ({
-        px: {
-          sm: theme.spacingFunction(16),
-          xs: theme.spacingFunction(12),
-        },
-        // Adjust Breadcrumb's marginLeft on screens < md to keep it aligned with the Products
-        '& [data-qa-entity-header]': {
-          [theme.breakpoints.down('md')]: {
-            marginLeft: `-${theme.spacingFunction(8)}`,
-          },
-        },
-      })}
-    >
+    <Box sx={marketplaceContainerStyles}>
+      <DocumentTitleSegment segment="Cloud Marketplace - Catalog" />
       <LandingHeader
         breadcrumbProps={{
           crumbOverrides: [
@@ -191,6 +227,7 @@ export const MarketplaceLanding = () => {
             }
             options={categoryOptions}
             placeholder="Category"
+            renderOption={renderAutocompleteOption('category')}
             textFieldProps={{
               hideLabel: true,
             }}
@@ -208,6 +245,7 @@ export const MarketplaceLanding = () => {
             }
             options={typeOptions}
             placeholder="Type"
+            renderOption={renderAutocompleteOption('type')}
             textFieldProps={{
               hideLabel: true,
             }}

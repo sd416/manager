@@ -53,7 +53,7 @@ jobs:
           cache: "pnpm"
       - run: pnpm install --frozen-lockfile
       - run: pnpm run --filter @linode/validation build
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: packages-validation-lib
           path: packages/validation/lib
@@ -72,7 +72,7 @@ jobs:
           node-version-file: "package.json"
           cache: "pnpm"
       - run: pnpm install --frozen-lockfile
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-validation-lib
           path: packages/validation/lib
@@ -91,13 +91,13 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-validation-lib
           path: packages/validation/lib
       - run: pnpm install --frozen-lockfile
       - run: pnpm run --filter @linode/api-v4 build
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
@@ -118,11 +118,11 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       # Download the validation and api-v4 artifacts (built packages)
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-validation-lib
           path: packages/validation/lib
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
@@ -156,11 +156,11 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-validation-lib
           path: packages/validation/lib
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
@@ -210,7 +210,7 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
@@ -230,7 +230,7 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
@@ -250,11 +250,11 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-validation-lib
           path: packages/validation/lib
@@ -290,7 +290,7 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
@@ -310,7 +310,7 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
@@ -330,11 +330,11 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-validation-lib
           path: packages/validation/lib
@@ -354,11 +354,11 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-validation-lib
           path: packages/validation/lib
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
@@ -383,11 +383,11 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-validation-lib
           path: packages/validation/lib
@@ -421,17 +421,17 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-validation-lib
           path: packages/validation/lib
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
       - run: pnpm install --frozen-lockfile
       - run: pnpm run --filter linode-manager build-storybook
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: storybook-build
           path: packages/manager/storybook-static
@@ -442,7 +442,7 @@ jobs:
     needs: build-storybook
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: storybook-build
           path: storybook/build

@@ -37,7 +37,7 @@ jobs:
           - { index: 4, name: "USER_4" }
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
         with:
           run_install: false
           version: 10
@@ -59,7 +59,7 @@ jobs:
       - run: pnpm run --filter @linode/validation build
       - run: pnpm run --filter @linode/api-v4 build
       - name: Run tests
-        uses: cypress-io/github-action@2ad32e649e4db26c07674ebae31a297601dbcbaf # v6.10.8
+        uses: cypress-io/github-action@bc22e01685c56e89e7813fd8e26f33dc47f87e15 # v7.1.5
         with:
           working-directory: packages/manager
           wait-on: "http://localhost:3000"

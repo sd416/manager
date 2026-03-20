@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
         with:
           run_install: false
           version: 10
@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
         with:
           run_install: false
           version: 10
@@ -53,7 +53,7 @@ jobs:
           cache: "pnpm"
       - run: pnpm install --frozen-lockfile
       - run: pnpm run --filter @linode/validation build
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: packages-validation-lib
           path: packages/validation/lib
@@ -63,7 +63,7 @@ jobs:
     needs: build-validation
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
         with:
           run_install: false
           version: 10
@@ -72,7 +72,7 @@ jobs:
           node-version-file: "package.json"
           cache: "pnpm"
       - run: pnpm install --frozen-lockfile
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-validation-lib
           path: packages/validation/lib
@@ -83,7 +83,7 @@ jobs:
     needs: build-validation
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
         with:
           run_install: false
           version: 10
@@ -91,13 +91,13 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-validation-lib
           path: packages/validation/lib
       - run: pnpm install --frozen-lockfile
       - run: pnpm run --filter @linode/api-v4 build
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
@@ -107,7 +107,7 @@ jobs:
     needs: build-sdk
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
         with:
           run_install: false
           version: 10
@@ -118,11 +118,11 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       # Download the validation and api-v4 artifacts (built packages)
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-validation-lib
           path: packages/validation/lib
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
@@ -148,7 +148,7 @@ jobs:
     needs: build-sdk
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
         with:
           run_install: false
           version: 10
@@ -156,11 +156,11 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-validation-lib
           path: packages/validation/lib
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
@@ -171,7 +171,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
         with:
           run_install: false
           version: 10
@@ -186,7 +186,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
         with:
           run_install: false
           version: 10
@@ -202,7 +202,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
         with:
           run_install: false
           version: 10
@@ -210,7 +210,7 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
@@ -222,7 +222,7 @@ jobs:
     needs: build-sdk
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
         with:
           run_install: false
           version: 10
@@ -230,7 +230,7 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
@@ -242,7 +242,7 @@ jobs:
     needs: build-sdk
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
         with:
           run_install: false
           version: 10
@@ -250,11 +250,11 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-validation-lib
           path: packages/validation/lib
@@ -266,7 +266,7 @@ jobs:
     needs: build-sdk
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
         with:
           run_install: false
           version: 10
@@ -282,7 +282,7 @@ jobs:
     needs: build-sdk
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
         with:
           run_install: false
           version: 10
@@ -290,7 +290,7 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
@@ -302,7 +302,7 @@ jobs:
     needs: build-sdk
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
         with:
           run_install: false
           version: 10
@@ -310,7 +310,7 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
@@ -322,7 +322,7 @@ jobs:
     needs: build-sdk
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
         with:
           run_install: false
           version: 10
@@ -330,11 +330,11 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-validation-lib
           path: packages/validation/lib
@@ -346,7 +346,7 @@ jobs:
     needs: build-sdk
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
         with:
           run_install: false
           version: 10
@@ -354,11 +354,11 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-validation-lib
           path: packages/validation/lib
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
@@ -375,7 +375,7 @@ jobs:
       - validate-sdk
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
         with:
           run_install: false
           version: 10
@@ -383,11 +383,11 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-validation-lib
           path: packages/validation/lib
@@ -413,7 +413,7 @@ jobs:
       NODE_OPTIONS: --max-old-space-size=4096
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
         with:
           run_install: false
           version: 10
@@ -421,17 +421,17 @@ jobs:
         with:
           node-version-file: "package.json"
           cache: "pnpm"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-validation-lib
           path: packages/validation/lib
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: packages-api-v4-lib
           path: packages/api-v4/lib
       - run: pnpm install --frozen-lockfile
       - run: pnpm run --filter linode-manager build-storybook
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: storybook-build
           path: packages/manager/storybook-static
@@ -442,7 +442,7 @@ jobs:
     needs: build-storybook
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: storybook-build
           path: storybook/build
